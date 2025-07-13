@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="../imagenes/logo.JPG" type="image/x-icon">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/style.css">
+    </head>
+<body>
+
+<!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">
+            <img src="../imagenes/logo.JPG" alt="Logo Clínica Dental" width="40" height="40" class="d-inline-block align-top">
+            Clínica Dental Urbana</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="servicios.html">Servicios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sobre_nosotros.html">Sobre Nosotros</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="contactenos.html">Contáctenos</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+<!-- HEADER DE LA PAGINA -->
+<section class="header text-center">
+  <div>
+    <h1>Contáctenos</h1>
+  </div>
+</section>
+
+<!-- MAPA + INFO CONTACTO -->
+<section class="contact">      
+    <!--MAPA DE UBICACIÓN-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-5 mt-5">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3323.722812244746!2d-70.580475!3d-33.5865455!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662d718a032972d%3A0x45da5699698e2261!2sINACAP%20Puente%20Alto!5e0!3m2!1ses!2scl!4v1750092574071!5m2!1ses!2scl" 
+                    width="100%" 
+                    height="400" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <!--Columna con titulo, subtitulo de info contacto + tablas -->
+            <div class="col-md-6 mt-5">
+                <h3>¿Deseas una sonrisa sana?</h3>
+                <p class="text-muted">Ven a visitarnos en Av. Concha y Toro 2730, Puente Alto, Región Metropolitana.</p>
+                <p class="text-muted">Horario de atención:</p>
+                <!-- Tabla de horarios de atencion -->
+                <table class="table">
+                    <tbody>
+                        <tr><td>Lunes - Viernes</td><td>09:00 - 19:00 h</td></tr>
+                        <tr><td>Sábado</td><td>09:00 - 14:00 h</td></tr>
+                        <tr><td>Domingo y Festivos</td><td>Cerrado</td></tr>
+                    </tbody>
+                <!-- Tabla de contactos-->
+                </table>
+                <p class="text-muted">Comunicate con nosotros:</p>
+                <table class="table">
+                    <tbody>
+                        <tr><td>Teléfonos</td><td>+56 9 1234 5678 / +56 9 8765 4321</td></tr>
+                        <tr><td>Email:</td><td>contacto@clinicadentalurbana.cl</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--FORMULARIO-->
+<section class="contact">
+    <div class="container">
+        <h3 class="mb-3">Nosotros nos contactamos contigo!</h3>
+        <form id="miFormulario" novalidate>
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Tu nombre">
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo electrónico:</label>
+                <input type="email" class="form-control" id="correo" placeholder="nombre@correo.com">
+            </div>
+            <div class="form-group">
+                <label for="mensaje">Mensaje:</label>
+                <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
+            </div>
+            <button id= "BotonFormulario" type="submit" class="btn btn-primary mb-5">Enviar</button>
+        </form>
+        <!-- <div id="errores" style="color: red; margin-top: 10px;"></div> -->
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+      <div class="row">
+
+        <!-- Información de contacto -->
+        <div class="col-md-4">
+          <h5 class="font-weight-bold">Contacto</h5>
+          <i class="bi bi-telephone"></i>
+          <p><strong>Teléfono:</strong> +56 9 1234 5678</p>
+          <p><strong>Teléfono:</strong> +56 9 8765 4321</p>
+          <p><strong>Email:</strong> contacto@clinicadentalurbana.cl</p>
+        </div>
+
+        <!-- Horarios -->
+        <div class="col-md-4">
+          <h5 class="font-weight-bold">Horario de Atención</h5>
+          <i class="bi bi-clock"></i>
+          <p>Lunes a Viernes: 09:00 - 19:00 hrs</p>
+          <p>Sábados: 09:00 - 14:00 hrs</p>
+          <p>Domingos y festivos: Cerrado</p>
+        </div>
+
+        <!-- Mapa de ubicación -->
+        <div class="col-md-4">
+          <h5 class="font-weight-bold">Ubicación</h5>
+          <i class="bi bi-geo-alt-fill"></i>
+          <p><strong>Dirección:</strong> Av. Concha y Toro 2730, Puente Alto, Región Metropolitana</p>
+          <p>Estacion de Metro Protectora de la Infancia</p>
+          <!-- <p>Estacionamiento gratuito</p> -->
+        </div>
+
+      </div>
+
+    <!-- Línea inferior -->
+    <div class="text-center mb-0">
+      <p>&copy; 2025 Clínica Dental Urbana. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../js/ValidadorFormulario.js"></script>
+</body>
+</html>

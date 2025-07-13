@@ -1,0 +1,184 @@
+/*Color principal de logo = #00c2cb */
+/* ---------- Fuente de letra ---------- */
+body {
+  font-family: 'Oswald', sans-serif;
+}
+
+/* ---------- Estilos - HEADER ---------- */
+
+/* Estilo de la imagen "header" */
+.header {
+  position: relative;
+  background: linear-gradient(rgba(17, 180, 209, 0.6), rgba(0, 0, 0, 0.6)), url('../imagenes/header.jpg') center/cover no-repeat;
+  height: 300px;
+  clip-path: ellipse(140% 100% at 50% 0%); /* curva inferior */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilo del texto "header" */
+.header h1 {
+  font-size: 4rem;
+  color: white;
+  margin: 0;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7)
+}
+
+
+/*---------- EStilo FOOTER ----------*/
+footer {
+  color: white;
+  background-color: #00c2cb;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Iconos y Parrafos */
+footer i, footer p{
+  margin-top: 10px;
+  font-size: 1rem;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  margin-top: 5px;
+}
+
+/* Titulo */
+footer h5 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+
+/* ---------- Imagenes de los servicios_destacados - INDEX ----------*/
+#services img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+
+/* -------------------------- Items del carousel - INDEX --------------------------*/
+/* Posicion de los iconos del carousel */
+.carousel-item {
+  position: relative;
+}
+
+.carouselInicio{
+  max-height: 200px;
+  overflow: hidden;
+}
+
+/* Se define el gradiente de cada imagen del carousel */
+.carousel-item .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 194, 203, 0.85), rgba(0, 0, 0, 0.6));
+  z-index: 1;
+}
+
+/* Tamaño de imagenes del carousel */
+.carousel-item img{
+  object-fit: cover;
+  height: 500px;
+}
+
+/* Se define la posicion del texto de cada imagen del carousel */
+.carousel-caption {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  text-align: center;
+}
+
+/* Se definen las propiedades del texto <h5> */
+.carousel-caption h5 {
+  font-size: 4rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+/* Se definen las propiedades del texto <p> */
+.carousel-caption p {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+/* -------------------------- Estilos de PORQUE ELEGIRNOS? --------------------------*/
+
+#porque_elegirnos{
+  background: linear-gradient(rgba(17, 180, 209, 0.6), rgba(0, 0, 0, 0.6)), url('../imagenes/porque_elegirnos.jpg') center/cover no-repeat;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#porque_elegirnos .container {
+  color: white;
+}
+
+#porque_elegirnos i{
+  font-size: 3rem;
+  text-align: center;
+}
+
+#porque_elegirnos p{
+  font-size: 1rem;
+  text-align: center;
+}
+
+#porque_elegirnos h2{
+  font-size: 3rem;
+  text-align: center;
+}
+
+
+/* -------------------------- Estilos de SERVICIOS --------------------------*/
+
+/* Tamaño de las imagenes de los servicios */
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+/* Escala la tarjetas para diferenciar que son botones */
+.card:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+/* ---------- Estilos Texto - CONTACTENOS - SOBRE_NOSOTROS---------- */
+
+/* Estilo de subtitulo Info Contacto y Formulario*/
+.contact h3, #nosotros h2, #nosotros h1{
+  font-size: 2rem;
+  color: black;
+  font-weight: bold;
+  margin: 1;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2)
+}
+/* -------------------------- Estilos de SOBRE_NOSOTROS --------------------------*/
+
+#nosotros img{
+  margin-bottom: 50px;
+  width: 50%;
+  object-fit: cover;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+}
