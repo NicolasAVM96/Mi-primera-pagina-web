@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinica Dental Urbana</title>
     <link rel="icon" href="../imagenes/logo.JPG" type="image/x-icon">
+
+    <!--Importa Bootstrap CSS-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!--Importa Bootstrap JS y jQuery-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../css/style.css">
     <script>
         $(document).ready(function () {
             $('#otherCountry').hide();
@@ -26,7 +32,7 @@
             }
             //Llama a la API para llenar el selecbox paises
             $.ajax({
-                url:'https://restcountries.com/v3.1/lang/spanish',
+                url: 'https://restcountries.com/v3.1/lang/spanish',
                 method: 'GET',
                 success: function (data) {
                     $('#selectCountry').empty();
@@ -59,7 +65,9 @@
             });
 
             //Enviar formulario
-            $('button[type="submit"]').on('click', function (e) {
+            $('form').on('submit', function (e) {
+                e.preventDefault();
+
                 let errores = [];
                 let nombre = $('#inputNombre').val();
                 let email = $('#inputEmail').val();
@@ -84,12 +92,10 @@
                 }
                 if (errores.length > 0) {
                     $('#lista-errores').empty()
-                    e.preventDefault();
                     errores.forEach(function (error) {
                         $('#lista-errores').append('<li>' + error + '</li>');
                     });
                     $('#div-errores').show();
-                    errores.empty();
                 } else {
                     const nuevoContacto = {
                         id: Date.now(),
@@ -98,9 +104,15 @@
                         pais: countrySelected,
                         comentarios: comentarios
                     }
+                    let dataBase = JSON.parse(localStorage.getItem("contactos")) || [];
                     dataBase.push(nuevoContacto)
                     localStorage.setItem("contactos", JSON.stringify(dataBase));
                     $('input, #textareaComentario, select').val('');
+                    $('#div-errores').hide();
+                    alert('¡Contacto guardado exitosamente!');
+                    $('#tabla-contactos tbody').append('<tr><td>' + nombre + '</td><td>' + email + '</td><td>' + countrySelected + '</td><td>' + comentarios + '</td></tr>');
+                    $('#tabla-contactos').show();
+                    $('#mensaje-sin-contactos').hide();
                 }
             });
         })
@@ -114,9 +126,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.html">
             <img src="../imagenes/logo.JPG" alt="Logo Clínica Dental" width="40" height="40"
-                class="d-inline-block align-top">
->>>>>>> 34d6e34 (Actualizacion de formulario, se agrega api de paises. Falta mejorar)
-            Clínica Dental Urbana</a>
+                class="d-inline-block align-top">Clínica Dental Urbana</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -231,7 +241,7 @@
                 <ul id="lista-errores"></ul>
             </div>
             <div class="form-group">
-                <small>(*) Campos obligatorios</small><br/><br/>
+                <small>(*) Campos obligatorios</small><br /><br />
                 <button class="btn btn-sm btn-warning" id="buttonClean" type="button">Limpiar</button>&nbsp;
                 <button class="btn btn-sm btn-primary" type="submit">Enviar</button>
             </div>
@@ -250,7 +260,8 @@
             <tbody>
             </tbody>
         </table>
-        <div class="alert alert-warning" id="mensaje-sin-contactos" style="display:none">No hay contactos para mostrar</div>
+        <div class="alert alert-warning" id="mensaje-sin-contactos" style="display:none">No hay contactos para mostrar
+        </div>
     </div>
 
 
@@ -300,4 +311,3 @@
 </body>
 
 </html>
-
