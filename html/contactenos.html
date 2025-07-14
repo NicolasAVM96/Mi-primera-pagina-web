@@ -17,17 +17,20 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
     <script>
         $(document).ready(function () {
             $('#otherCountry').hide();
-            let dataBase = JSON.parse(localStorage.getItem("contactos")) || []
-            if (dataBase.length > 0) {
+            let dataBase = JSON.parse(localStorage.getItem("contactos")) || [] //Carga los contactos desde localStorage
+
+            if (dataBase.length > 0) { //Si hay contactos, los muestra en la tabla
                 let tbody = $('#tabla-contactos tbody');
                 dataBase.forEach(function (contacto) {
                     tbody.append('<tr><td>' + contacto.nombre + '</td><td>' + contacto.email + '</td><td>' + contacto.pais + '</td><td>' + contacto.comentarios + '</td></tr>');
                 });
                 $('#tabla-contactos').show();
-            } else {
+            } else { //Si no hay contactos, muestra un mensaje
                 $('#mensaje-sin-contactos').show()
             }
             //Llama a la API para llenar el selecbox paises
@@ -35,12 +38,12 @@
                 url: 'https://restcountries.com/v3.1/lang/spanish',
                 method: 'GET',
                 success: function (data) {
-                    $('#selectCountry').empty();
-                    $('#selectCountry').append('<option value="">Seleccione Pais</option>');
-                    data.forEach(function (country) {
-                        const countryName = country.name.common;
-                        const capitalName = country.capital[0];
-                        $('#selectCountry').append('<option data-capital="' + capitalName + '" value="' + countryName + '">' + countryName + '</option>');
+                    $('#selectCountry').empty(); //Limpia el select antes de agregar los paises
+                    $('#selectCountry').append('<option value="">Seleccione Pais</option>'); //Agrega la opción por defecto
+                    data.forEach(function (country) {// Recorre los paises obtenidos
+                        const countryName = country.name.common;// Obtiene el nombre del pais
+                        const capitalName = country.capital[0];// Obtiene el nombre de la capital
+                        $('#selectCountry').append('<option data-capital="' + capitalName + '" value="' + countryName + '">' + countryName + '</option>');// Agrega el pais al select
                     })
                     $('#otherCountry').remove();
                 },
