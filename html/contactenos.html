@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinica Dental Urbana</title>
+    <link rel="icon" href="../imagenes/logo.JPG" type="image/x-icon">
+
+    <!--Importa Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!--Importa Bootstrap JS y jQuery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#otherCountry').hide();
+            let dataBase = JSON.parse(localStorage.getItem("contactos")) || [] //Carga los contactos desde localStorage
+
+            if (dataBase.length > 0) { //Si hay contactos, los muestra en la tabla
+                let tbody = $('#tabla-contactos tbody');
+                dataBase.forEach(function (contacto) {
+                    tbody.append('<tr><td>' + contacto.nombre + '</td><td>' + contacto.email + '</td><td>' + contacto.pais + '</td><td>' + contacto.comentarios + '</td></tr>');
+                });
+                $('#tabla-contactos').show();
+            } else { //Si no hay contactos, muestra un mensaje
+                $('#mensaje-sin-contactos').show()
+            }
+            //Llama a la API para llenar el selecbox paises
+            $.ajax({
+                url: 'https://restcountries.com/v3.1/lang/spanish',
+                method: 'GET',
+                success: function (data) {
+                    $('#selectCountry').empty(); //Limpia el select antes de agregar los paises
+                    $('#selectCountry').append('<option value="">Seleccione Pais</option>'); //Agrega la opción por defecto
+                    data.forEach(function (country) {// Recorre los paises obtenidos
+                        const countryName = country.name.common;// Obtiene el nombre del pais
+                        const capitalName = country.capital[0];// Obtiene el nombre de la capital
+                        $('#selectCountry').append('<option data-capital="' + capitalName + '" value="' + countryName + '">' + countryName + '</option>');// Agrega el pais al select
+                    })
+                    $('#otherCountry').remove();
+                },
+                error: function () {
+                    alert("No se pudo cargar la lista de paises");
+                    $('#selectCountry').remove();
+                    $('#otherCountry').show();
+                }
+            });
+            //Setear la capital
+            $('#selectCountry').on('change', function () {
+                const optionSelected = $('#selectCountry option:selected');
+                $('#containerCapital input').val(optionSelected.data('capital'));
+                $('#containerCapital').show();
+            });
+
+            //Limpiar el formulario
+            $('#buttonClean').on('click', function () {
+                if (confirm('¿Está seguro que desea limpiar el formulario?')) {
+                    $('input, #textareaComentario, select').val('');
+                }
+            });
+
+            //Enviar formulario
+            $('form').on('submit', function (e) {
+                e.preventDefault();
+
+                let errores = [];
+                let nombre = $('#inputNombre').val();
+                let email = $('#inputEmail').val();
+                let telefono = $('#inputTelefono').val();
+                let countrySelected = $('#selectCountry option:selected').val();
+                let comentarios = $("#textareaComentario").val();
+                if (email == '') {
+                    errores.push("El email está vacio")
+                } else {
+                    let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!regex.test(email)) {
+                        errores.push("El email no tiene el formato válido")
+                    }
+                }
+                if (nombre == '') {
+                    errores.push("Ingrese su nombre")
+                }
+                if (countrySelected == '') {
+                    errores.push("Seleccione un país")
+                }
+                if (comentarios == '') {
+                    errores.push("Debe ingresar un comentario")
+                }
+                if (errores.length > 0) {
+                    $('#lista-errores').empty()
+                    errores.forEach(function (error) {
+                        $('#lista-errores').append('<li>' + error + '</li>');
+                    });
+                    $('#div-errores').show();
+                } else {
+                    const nuevoContacto = {
+                        id: Date.now(),
+                        nombre: nombre,
+                        telefono: telefono,
+                        email: email,
+                        pais: countrySelected,
+                        comentarios: comentarios
+                    }
+                    let dataBase = JSON.parse(localStorage.getItem("contactos")) || [];
+                    dataBase.push(nuevoContacto);
+                    localStorage.setItem("contactos", JSON.stringify(dataBase));
+
+                    // Limpiar campos
+                    $('input, #textareaComentario, select').val('');
+                    $('#div-errores').hide();
+
+                    // Mostrar notificación animada
+                    $('#notificacionExito').fadeIn();
+
+                    setTimeout(() => {
+                        $('#notificacionExito').fadeOut();
+                    }, 5000); // Desaparece después de 5 segundos
+                }
+            });
+        })
+    </script>
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">
+            <img src="../imagenes/logo.JPG" alt="Logo Clínica Dental" width="40" height="40"
+                class="d-inline-block align-top">Clínica Dental Urbana</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="servicios.html">Servicios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sobre_nosotros.html">Sobre Nosotros</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="contactenos.html">Contáctenos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin.html">Administrador</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HEADER DE LA PAGINA -->
+    <section class="header text-center">
+        <div>
+            <h1>Contáctenos</h1>
+        </div>
+    </section>
+
+    <!-- MAPA + INFO CONTACTO -->
+    <section class="contact">
+        <!--MAPA DE UBICACIÓN-->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-5 mt-5">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3323.722812244746!2d-70.580475!3d-33.5865455!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662d718a032972d%3A0x45da5699698e2261!2sINACAP%20Puente%20Alto!5e0!3m2!1ses!2scl!4v1750092574071!5m2!1ses!2scl"
+                        width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                <!--Columna con titulo, subtitulo de info contacto + tablas -->
+                <div class="col-md-6 mt-5">
+                    <h3>¿Deseas una sonrisa sana?</h3>
+                    <p class="text-muted">Ven a visitarnos en Av. Concha y Toro 2730, Puente Alto, Región Metropolitana.
+                    </p>
+                    <p class="text-muted">Horario de atención:</p>
+                    <!-- Tabla de horarios de atencion -->
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Lunes - Viernes</td>
+                                <td>09:00 - 19:00 h</td>
+                            </tr>
+                            <tr>
+                                <td>Sábado</td>
+                                <td>09:00 - 14:00 h</td>
+                            </tr>
+                            <tr>
+                                <td>Domingo y Festivos</td>
+                                <td>Cerrado</td>
+                            </tr>
+                        </tbody>
+                        <!-- Tabla de contactos-->
+                    </table>
+                    <p class="text-muted">Comunicate con nosotros:</p>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Teléfonos</td>
+                                <td>+56 9 1234 5678 / +56 9 8765 4321</td>
+                            </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td>contacto@clinicadentalurbana.cl</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMULARIO -->
+    <div class="container mt-4">
+        <h3 class="mb-3">Nosotros nos contactamos contigo!</h3>
+        <form>
+            <!-- NOMBRE -->
+            <div class="form-group">
+                <label for="inputNombre">Nombre (*)</label>
+                <input type="text" class="form-control" id="inputNombre" placeholder="Tu nombre">
+            </div>
+            <!-- Email -->
+            <div class="form-group">
+                <label for="inputEmail">Email (*)</label>
+                <input type="text" class="form-control" id="inputEmail" placeholder="name@example.com">
+            </div>
+            <!-- Telefono -->
+            <div class="form-group">
+                <label for="inputTelefono">Telefono (*)</label>
+                <input type="text" class="form-control" id="inputEmail" placeholder="9 1234 5678">
+            </div>
+            <!-- Pais -->
+            <div class="form-group">
+                <label for="selectCountry">Pais (*)</label>
+                <select class="form-control" id="selectCountry">
+                    <option value="">Seleccione</option>
+                </select>
+                <input type="text" class="form-control" id="otherCountry" placeholder="Ingrese el nombre del pais">
+            </div>
+            <!-- Se agrega el forumario de la capital -->
+            <div class="form-group" id="containerCapital" style="display: none;">
+                <label for="inputEmail">Capital</label>
+                <input type="text" class="form-control" id="inputCapital" disabled />
+            </div>
+            <!-- Comentarios -->
+            <div class="form-group">
+                <label for="textareaComentario">Comentarios (*)</label>
+                <textarea class="form-control" id="textareaComentario" rows="3"></textarea>
+            </div>
+            <div id="div-errores" class="alert alert-danger" style="display: none;">
+                <ul id="lista-errores"></ul>
+            </div>
+            <div class="form-group">
+                <small>(*) Campos obligatorios</small><br /><br />
+                <button class="btn btn-sm btn-warning" id="buttonClean" type="button">Limpiar</button>&nbsp;
+                <button class="btn btn-sm btn-primary" type="submit">Enviar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- CONFIRMACION ENVIO FORMULARIO -->
+        <div id="notificacionExito" class="notificacion-exito">
+        <div class="contenido">
+            <span class="cerrar" onclick="cerrarNotificacion()">×</span>
+            <h5>✅ ¡Formulario enviado!</h5>
+            <p>Gracias por contactarnos. Pronto te responderemos.</p>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="row">
+
+                <!-- Información de contacto -->
+                <div class="col-md-4">
+                    <h5 class="font-weight-bold">Contacto</h5>
+                    <i class="bi bi-telephone"></i>
+                    <p><strong>Teléfono:</strong> +56 9 1234 5678</p>
+                    <p><strong>Teléfono:</strong> +56 9 8765 4321</p>
+                    <p><strong>Email:</strong> contacto@clinicadentalurbana.cl</p>
+                </div>
+
+                <!-- Horarios -->
+                <div class="col-md-4">
+                    <h5 class="font-weight-bold">Horario de Atención</h5>
+                    <i class="bi bi-clock"></i>
+                    <p>Lunes a Viernes: 09:00 - 19:00 hrs</p>
+                    <p>Sábados: 09:00 - 14:00 hrs</p>
+                    <p>Domingos y festivos: Cerrado</p>
+                </div>
+
+                <!-- Mapa de ubicación -->
+                <div class="col-md-4">
+                    <h5 class="font-weight-bold">Ubicación</h5>
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <p><strong>Dirección:</strong> Av. Concha y Toro 2730, Puente Alto, Región Metropolitana</p>
+                    <p>Estacion de Metro Protectora de la Infancia</p>
+                    <!-- <p>Estacionamiento gratuito</p> -->
+                </div>
+
+            </div>
+
+            <!-- Línea inferior -->
+            <div class="text-center mb-0">
+                <p>&copy; 2025 Clínica Dental Urbana. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+
+
+</body>
+
+</html>

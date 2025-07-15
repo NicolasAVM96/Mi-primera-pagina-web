@@ -1,0 +1,233 @@
+<!--py= paddinng (Espacio vertical de arriba y abajo) -->
+<!--mt= margen superior (Espacio con contenido anterior) -->
+<!--mb= margen inferior (Espacio con contenido anterior) -->
+<!--Clase "container" = crea un contenedor, que tiene como contenido filas(row) y columnas (col) -->
+<!--Clase "row" = es una fila, en la cual puedes agregar y organizar columnas alineadas (12 columnas max) -->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<!--HEAD-->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clinica Dental Urbana</title>
+  <link rel="icon" href="../imagenes/logo.JPG" type="image/x-icon"> <!--Importa favicon-->
+
+  <!--Importa Bootstrap CSS-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!--Importa framework boostrap-->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+  <!--Importa estilo de texto Oswald-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!--Importa iconos para seccion "Porque Elegirnos"-->
+  <link rel="stylesheet" href="../css/style.css"> <!--Importa estilos de css-->
+
+  <!--Importa Bootstrap JS y jQuery-->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script><!--Importa jquery-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body> <!--INICIO DEL CUERPO DE LA PAGINA-->
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-black">
+    <a class="navbar-brand" href="index.html">
+      <img src="../imagenes/logo.JPG" alt="Logo Clínica Dental" width="40" height="40" class="d-inline-block align-top">
+      Clínica Dental Urbana</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <!-- BOTON DE INICIO -->
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Inicio</a>
+        </li>
+
+        <!-- BOTON DE SERVICIOS -->
+        <li class="nav-item">
+          <a class="nav-link" href="servicios.html">Servicios</a>
+        </li>
+
+        <!-- BOTON DE SOBRE NOSOTROS -->
+        <li class="nav-item">
+          <a class="nav-link" href="sobre_nosotros.html">Sobre Nosotros</a>
+        </li>
+
+        <!-- BOTON DE CONTACTENOS -->
+        <li class="nav-item">
+          <a class="nav-link" href="contactenos.html">Contáctenos</a>
+        </li>
+
+        <!-- BOTON DE ADMINISTRADOR -->
+        <li class="nav-item">
+          <a class="nav-link" href="admin.html">Administrador</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!--CAROUSEL-->
+  <section>
+    <div id="carouselInicio" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselInicio" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselInicio" data-slide-to="1"></li>
+        <li data-target="#carouselInicio" data-slide-to="2"></li>
+      </ol>
+
+      <div class="carousel-inner">
+
+        <div class="carousel-item active position-relative">
+          <img src="../imagenes/carousel/atencion_profesional.PNG" class="d-block w-100" alt="Atención profesional">
+          <div class="overlay"></div>
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Atención Profesional</h5>
+            <p>Confía en expertos con años de experiencia.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item position-relative">
+          <img src="../imagenes/carousel/tecnologia_vanguardia.jpg" class="d-block w-100"
+            alt="Tecnología de vanguardia">
+          <div class="overlay"></div>
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Tecnología de Vanguardia</h5>
+            <p>Equipamiento moderno para tu salud dental.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item position-relative">
+          <img src="../imagenes/carousel/instalaciones_comodas.jpg" class="d-block w-100" alt="Instalaciones cómodas">
+          <div class="overlay"></div>
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Instalaciones Cómodas</h5>
+            <p>Ambiente cálido y acogedor para tu tranquilidad.</p>
+          </div>
+        </div>
+      </div>
+
+      <a class="carousel-control-prev" href="#carouselInicio" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Anterior</span>
+      </a>
+
+      <a class="carousel-control-next" href="#carouselInicio" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Siguiente</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- SERVICIOS BÁSICOS -->
+  <section id="services" class="py-5">
+    <div class="container text-center">
+      <h2 class="mb-4">Nuestros Servicios Destacados</h2>
+      <div class="row">
+
+        <div class="col-md-4 mb-3">
+          <img src="../imagenes/servicios_destacados/ortodoncia.jpg" alt="Ortodoncia">
+          <h5>Ortodoncia</h5>
+          <p>Corrección de la posición dental para una sonrisa alineada.</p>
+          <a href="contactenos.html" class="btn btn-primary mt-2">Agendar Cita</a>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <img src="../imagenes/servicios_destacados/implante.jpg" alt="implante">
+          <h5>Implantes Dentales</h5>
+          <p>Soluciones permanentes para dientes perdidos.</p>
+          <a href="contactenos.html" class="btn btn-primary mt-2">Agendar Cita</a>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <img src="../imagenes/servicios_destacados/blanqueamiento.jpg" alt="blanqueamiento">
+          <h5>Blanqueamiento</h5>
+          <p>Recupera el brillo y color natural de tus dientes.</p>
+          <a href="contactenos.html" class="btn btn-primary mt-2">Agendar Cita</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORQUE ELEGIRNOS? -->
+  <section id="porque_elegirnos" class="py-5">
+    <div class="container text-center">
+      <h2 class="mb-4 display-4">¿Por qué elegir Clínica Dental Urbana?</h2>
+      <div class="row">
+
+        <div class="col-md-2 offset-md-1 mb-4">
+          <i class="bi bi-heart-pulse-fill"></i>
+          <p class="mt-2">+5.000 Implantes instalados<br>+35.000 procedimientos</p>
+        </div>
+
+        <div class="col-md-2 mb-4">
+          <i class="bi bi-cpu-fill"></i>
+          <p class="mt-2">Tecnología de Vanguardia 3D</p>
+        </div>
+
+        <div class="col-md-2 mb-4">
+          <i class="bi bi-people-fill"></i>
+          <p class="mt-2">+20 años de experiencia</p>
+        </div>
+
+        <div class="col-md-2 mb-4">
+          <i class="bi bi-credit-card-fill"></i>
+          <p class="mt-2">12 cuotas sin interés</p>
+        </div>
+
+        <div class="col-md-2 mb-4">
+          <i class="bi bi-geo-alt-fill"></i>
+          <p class="mt-2">Cerca del Metro</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="row">
+
+        <!-- Información de contacto -->
+        <div class="col-md-4">
+          <h5 class="font-weight-bold">Contacto</h5>
+          <i class="bi bi-telephone"></i>
+          <p><strong>Teléfono:</strong> +56 9 1234 5678</p>
+          <p><strong>Teléfono:</strong> +56 9 8765 4321</p>
+          <p><strong>Email:</strong> contacto@clinicadentalurbana.cl</p>
+        </div>
+
+        <!-- Horarios -->
+        <div class="col-md-4">
+          <h5 class="font-weight-bold">Horario de Atención</h5>
+          <i class="bi bi-clock"></i>
+          <p>Lunes a Viernes: 09:00 - 19:00 hrs</p>
+          <p>Sábados: 09:00 - 14:00 hrs</p>
+          <p>Domingos y festivos: Cerrado</p>
+        </div>
+
+        <!-- Mapa de ubicación -->
+        <div class="col-md-4">
+          <h5 class="font-weight-bold">Ubicación</h5>
+          <i class="bi bi-geo-alt-fill"></i>
+          <p><strong>Dirección:</strong> Av. Concha y Toro 2730, Puente Alto, Región Metropolitana</p>
+          <p>Estacion de Metro Protectora de la Infancia</p>
+          <!-- <p>Estacionamiento gratuito</p> -->
+        </div>
+
+      </div>
+
+      <!-- Línea inferior -->
+      <div class="text-center mb-0">
+        <p>&copy; 2025 Clínica Dental Urbana. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
