@@ -74,6 +74,7 @@
                 let errores = [];
                 let nombre = $('#inputNombre').val();
                 let email = $('#inputEmail').val();
+                let telefono = $('#inputTelefono').val();
                 let countrySelected = $('#selectCountry option:selected').val();
                 let comentarios = $("#textareaComentario").val();
                 if (email == '') {
@@ -103,19 +104,25 @@
                     const nuevoContacto = {
                         id: Date.now(),
                         nombre: nombre,
+                        telefono: telefono,
                         email: email,
                         pais: countrySelected,
                         comentarios: comentarios
                     }
                     let dataBase = JSON.parse(localStorage.getItem("contactos")) || [];
-                    dataBase.push(nuevoContacto)
+                    dataBase.push(nuevoContacto);
                     localStorage.setItem("contactos", JSON.stringify(dataBase));
+
+                    // Limpiar campos
                     $('input, #textareaComentario, select').val('');
                     $('#div-errores').hide();
-                    alert('¡Contacto guardado exitosamente!');
-                    $('#tabla-contactos tbody').append('<tr><td>' + nombre + '</td><td>' + email + '</td><td>' + countrySelected + '</td><td>' + comentarios + '</td></tr>');
-                    $('#tabla-contactos').show();
-                    $('#mensaje-sin-contactos').hide();
+
+                    // Mostrar notificación animada
+                    $('#notificacionExito').fadeIn();
+
+                    setTimeout(() => {
+                        $('#notificacionExito').fadeOut();
+                    }, 5000); // Desaparece después de 5 segundos
                 }
             });
         })
@@ -147,6 +154,9 @@
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="contactenos.html">Contáctenos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin.html">Administrador</a>
                 </li>
             </ul>
         </div>
@@ -217,14 +227,22 @@
     <div class="container mt-4">
         <h3 class="mb-3">Nosotros nos contactamos contigo!</h3>
         <form>
+            <!-- NOMBRE -->
             <div class="form-group">
                 <label for="inputNombre">Nombre (*)</label>
                 <input type="text" class="form-control" id="inputNombre" placeholder="Tu nombre">
             </div>
+            <!-- Email -->
             <div class="form-group">
                 <label for="inputEmail">Email (*)</label>
                 <input type="text" class="form-control" id="inputEmail" placeholder="name@example.com">
             </div>
+            <!-- Telefono -->
+            <div class="form-group">
+                <label for="inputTelefono">Telefono (*)</label>
+                <input type="text" class="form-control" id="inputEmail" placeholder="9 1234 5678">
+            </div>
+            <!-- Pais -->
             <div class="form-group">
                 <label for="selectCountry">Pais (*)</label>
                 <select class="form-control" id="selectCountry">
@@ -232,10 +250,12 @@
                 </select>
                 <input type="text" class="form-control" id="otherCountry" placeholder="Ingrese el nombre del pais">
             </div>
+            <!-- Se agrega el forumario de la capital -->
             <div class="form-group" id="containerCapital" style="display: none;">
                 <label for="inputEmail">Capital</label>
                 <input type="text" class="form-control" id="inputCapital" disabled />
             </div>
+            <!-- Comentarios -->
             <div class="form-group">
                 <label for="textareaComentario">Comentarios (*)</label>
                 <textarea class="form-control" id="textareaComentario" rows="3"></textarea>
@@ -249,24 +269,16 @@
                 <button class="btn btn-sm btn-primary" type="submit">Enviar</button>
             </div>
         </form>
-        <br><br>
-        <h2 class="mb-4">Listado Contactos</h2>
-        <table id="tabla-contactos" style="display: none;" class="table table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th>nombre</th>
-                    <th>Email</th>
-                    <th>Pais</th>
-                    <th>Comentarios</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-        <div class="alert alert-warning" id="mensaje-sin-contactos" style="display:none">No hay contactos para mostrar
-        </div>
     </div>
 
+    <!-- CONFIRMACION ENVIO FORMULARIO -->
+        <div id="notificacionExito" class="notificacion-exito">
+        <div class="contenido">
+            <span class="cerrar" onclick="cerrarNotificacion()">×</span>
+            <h5>✅ ¡Formulario enviado!</h5>
+            <p>Gracias por contactarnos. Pronto te responderemos.</p>
+        </div>
+    </div>
 
     <!-- FOOTER -->
     <footer>

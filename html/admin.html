@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinica Dental Urbana</title>
+    <link rel="icon" href="../imagenes/logo.JPG" type="image/x-icon">
+
+    <!--Importa Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!--Importa Bootstrap JS y jQuery-->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#otherCountry').hide();
+
+            //Se cargan los contactos desde localStorage
+            let dataBase = JSON.parse(localStorage.getItem("contactos")) || [];
+
+            // En el caso de que hayan datos en la variable dataBase, se muestran en la tabla
+            if (dataBase.length > 0) {
+                let tbody = $('#tabla-contactos tbody');
+                dataBase.forEach(function (contacto) {
+                    tbody.append(`
+                    <tr data-id="${contacto.id}">
+                        <td>${contacto.nombre}</td>
+                        <td>${contacto.email}</td>
+                        <td>${contacto.telefono}</td>
+                        <td>${contacto.pais}</td>
+                        <td>${contacto.comentarios}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm editar-btn">Editar</button>
+                            <button class="btn btn-danger btn-sm eliminar-btn">Eliminar</button>
+                        </td>
+                    </tr>
+                    `);
+                });
+                $('#tabla-contactos').show();
+            } else {
+                $('#mensaje-sin-contactos').show();
+            }
+        });
+    </script>
+    <!-- Futuro script para responder el mensaje -->
+    <!-- <script>
+        // Al hacer clic en "Responder" se abre el modal
+        $(document).on('click', '.responder-btn', function () {
+            const nombre = $(this).data('nombre'); // Obtener el nombre del contacto
+            const email = $(this).data('email'); //Obtener el email del contacto
+            $('#nombreDestino').text(nombre); // Mostrar el nombre en el modal
+            $('#mensajeRespuesta').val(''); // Cada vez que se abra el modal, se limpia el campo de mensaje
+            $('#modalRespuesta').modal('show');// Mostrar el modal
+
+            // Se guarda el email en el botón "Enviar" para usarlo al enviar la respuesta
+            $('#enviarRespuesta').data('email', email);
+        });
+
+        // Al hacer clic en "Enviar" dentro del modal
+        $('#enviarRespuesta').on('click', function () {
+            const email = $(this).data('email'); // Obtener el email del botón
+            const mensaje = $('#mensajeRespuesta').val().trim(); // Obtener el mensaje del textarea
+        });
+    </script> -->
+
+    <script>
+        //eliminar registros de la tabla
+        $(document).on('click', '.eliminar-btn', function () {
+            const row = $(this).closest('tr');
+            const id = Number(row.attr('data-id')); // Se obtiene el id numérico exacto
+
+            if (confirm('¿Estás seguro de que deseas eliminar este contacto?')) {
+                let dataBase = JSON.parse(localStorage.getItem("contactos")) || [];
+
+                // Se filtra y elimina el contacto que coincida con el ID
+                const nuevaBase = dataBase.filter(contacto => Number(contacto.id) !== id);
+
+                // Actualizamos el localStorage con la nueva base SIN ese contacto
+                localStorage.setItem("contactos", JSON.stringify(nuevaBase));
+
+                // Eliminamos visualmente la fila de la tabla
+                row.remove();
+
+                // Si ya no quedan registros, ocultamos la tabla y mostramos el mensaje
+                if (nuevaBase.length === 0) {
+                    $('#tabla-contactos').hide();
+                    $('#mensaje-sin-contactos').show();
+                }
+            }
+        });
+
+
+        // Editar registros de la tabla
+        $(document).on('click', '.editar-btn', function () {
+            const row = $(this).closest('tr');
+            const id = Number(row.attr('data-id'));
+
+            const dataBase = JSON.parse(localStorage.getItem("contactos")) || [];
+            const contacto = dataBase.find(c => c.id === id);
+
+            if (contacto) {
+                $('#edit-id').val(contacto.id);
+                $('#edit-nombre').val(contacto.nombre);
+                $('#edit-email').val(contacto.email);
+                $('#edit-pais').val(contacto.pais);
+                $('#edit-comentarios').val(contacto.comentarios);
+                $('#form-editar').show();
+                window.scrollTo(0, document.body.scrollHeight); // baja al formulario
+            }
+        });
+
+        // Guardar cambios al editar
+        $('#editarForm').on('submit', function (e) {
+            e.preventDefault();
+
+            const id = parseInt($('#edit-id').val());
+            const nombre = $('#edit-nombre').val().trim();
+            const email = $('#edit-email').val().trim();
+            const pais = $('#edit-pais').val().trim();
+            const comentarios = $('#edit-comentarios').val().trim();
+
+            let dataBase = JSON.parse(localStorage.getItem("contactos")) || [];
+            const index = dataBase.findIndex(c => c.id === id);
+
+            if (index !== -1) {
+                dataBase[index] = { id, nombre, email, pais, comentarios };
+                localStorage.setItem("contactos", JSON.stringify(dataBase));
+
+                const fila = $(`tr[data-id="${id}"]`);
+                fila.find('td:eq(0)').text(nombre);
+                fila.find('td:eq(1)').text(email);
+                fila.find('td:eq(2)').text(pais);
+                fila.find('td:eq(3)').text(comentarios);
+
+                // Mostrar notificación visual
+                $('#notificacionExito').fadeIn();
+                setTimeout(() => {
+                    $('#notificacionExito').fadeOut();
+                }, 4000);
+
+                $('#form-editar').hide(); // si no usas modal
+            }
+        });
+        function cerrarNotificacion() {
+            $('#notificacionExito').fadeOut();
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">
+            <img src="../imagenes/logo.JPG" alt="Logo Clínica Dental" width="40" height="40"
+                class="d-inline-block align-top">
+            Clínica Dental Urbana</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="servicios.html">Servicios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sobre_nosotros.html">Sobre Nosotros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contactenos.html">Contáctenos</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="admin.html">Administrador</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HEADER DE LA PAGINA -->
+    <section class="header text-center">
+        <div>
+            <h1>Menu de mensajes</h1>
+        </div>
+    </section>
+
+
+    <!-- LISTA DE MENSAJES -->
+    <div class="contenedor-tabla">
+        <h2 class="mb-4 text-center">Listado de mensajes</h2>
+        <table id="tabla-contactos" style="display: none;" class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>nombre</th>
+                    <th>Email</th>
+                    <th>Telefono</th>
+                    <th>Pais</th>
+                    <th>Comentarios</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="alert alert-warning" id="mensaje-sin-contactos" style="display:none">No hay contactos para mostrar
+        </div>
+    </div>
+
+    <!-- FORMULARIO DE EDICIÓN DE MENSAJES -->
+    <div id="form-editar" style="display:none" class="container mt-4">
+        <h4>Editar Contacto</h4>
+        <form id="editarForm">
+            <input type="hidden" id="edit-id">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" id="edit-nombre" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="edit-email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>País</label>
+                <input type="text" id="edit-pais" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Comentarios</label>
+                <textarea id="edit-comentarios" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Actualizar</button>
+        </form>
+    </div>
+
+    <!-- CONFIRMACIÓN EDICIÓN -->
+    <div id="notificacionExito" class="notificacion-exito">
+        <div class="contenido">
+            <span class="cerrar" onclick="cerrarNotificacion()">×</span>
+            <h5>✅ ¡Formulario editado!</h5>
+        </div>
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="row">
+
+                <!-- Información de contacto -->
+                <div class="col-md-4">
+                    <h5 class="font-weight-bold">Contacto</h5>
+                    <i class="bi bi-telephone"></i>
+                    <p><strong>Teléfono:</strong> +56 9 1234 5678</p>
+                    <p><strong>Teléfono:</strong> +56 9 8765 4321</p>
+                    <p><strong>Email:</strong> contacto@clinicadentalurbana.cl</p>
+                </div>
+
+                <!-- Horarios -->
+                <div class="col-md-4">
+                    <h5 class="font-weight-bold">Horario de Atención</h5>
+                    <i class="bi bi-clock"></i>
+                    <p>Lunes a Viernes: 09:00 - 19:00 hrs</p>
+                    <p>Sábados: 09:00 - 14:00 hrs</p>
+                    <p>Domingos y festivos: Cerrado</p>
+                </div>
+
+                <!-- Mapa de ubicación -->
+                <div class="col-md-4">
+                    <h5 class="font-weight-bold">Ubicación</h5>
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <p><strong>Dirección:</strong> Av. Concha y Toro 2730, Puente Alto, Región Metropolitana</p>
+                    <p>Estacion de Metro Protectora de la Infancia</p>
+                    <!-- <p>Estacionamiento gratuito</p> -->
+                </div>
+
+            </div>
+
+            <!-- Línea inferior -->
+            <div class="text-center mb-0">
+                <p>&copy; 2025 Clínica Dental Urbana. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Futuro MODAL DE RESPUESTA MENSAJES
+    <div class="modal fade" id="modalRespuesta" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Responder a <span id="nombreDestino"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formRespuesta">
+                        <div class="form-group">
+                            <label for="mensajeRespuesta">Mensaje</label>
+                            <textarea class="form-control" id="mensajeRespuesta" rows="4"
+                                placeholder="Escribe tu respuesta aquí..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" id="enviarRespuesta">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+</body>
+
+</html>
