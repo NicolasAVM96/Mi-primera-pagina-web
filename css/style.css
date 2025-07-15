@@ -225,16 +225,18 @@ footer h5 {
 /* Estilos de la tabla de contactos */
 #tabla-contactos {
   max-width: 90%;
-  margin: 40px auto; /* centrado horizontal y espacio arriba/abajo */
+  margin: 40px auto;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+/* Tamaño del contenedor  */
 .contenedor-tabla {
   max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
 }
 
+/* Tamaño estilo del formulario de edicion */
 #form-editar {
   max-width: 600px;
   margin: 20px auto;
