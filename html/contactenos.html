@@ -27,7 +27,7 @@
             if (dataBase.length > 0) { //Si hay contactos, los muestra en la tabla
                 let tbody = $('#tabla-contactos tbody');
                 dataBase.forEach(function (contacto) {
-                    tbody.append('<tr><td>' + contacto.nombre + '</td><td>' + contacto.email + '</td><td>' + contacto.pais + '</td><td>' + contacto.comentarios + '</td></tr>');
+                    tbody.append('<tr><td>' + contacto.nombre + '</td><td>' + contacto.email + '</td><td>' + contacto.telefono + '</td><td>' + contacto.pais + '</td><td>' + contacto.comentarios + '</td></tr>');
                 });
                 $('#tabla-contactos').show();
             } else { //Si no hay contactos, muestra un mensaje
@@ -88,6 +88,9 @@
                 if (nombre == '') {
                     errores.push("Ingrese su nombre")
                 }
+                if (telefono == '') {
+                    errores.push("Ingrese su telefono")
+                }
                 if (countrySelected == '') {
                     errores.push("Seleccione un país")
                 }
@@ -122,7 +125,7 @@
 
                     setTimeout(() => {
                         $('#notificacionExito').fadeOut();
-                    }, 5000); // Desaparece después de 5 segundos
+                    }, 5000); // Desaparece después de 10 segundos
                 }
             });
         })
@@ -240,7 +243,7 @@
             <!-- Telefono -->
             <div class="form-group">
                 <label for="inputTelefono">Telefono (*)</label>
-                <input type="text" class="form-control" id="inputEmail" placeholder="9 1234 5678">
+                <input type="tel" pattern="[0-9]{9}" maxlength="9" class="form-control" id="inputTelefono" placeholder="912345678" required>
             </div>
             <!-- Pais -->
             <div class="form-group">
@@ -252,7 +255,7 @@
             </div>
             <!-- Se agrega el forumario de la capital -->
             <div class="form-group" id="containerCapital" style="display: none;">
-                <label for="inputEmail">Capital</label>
+                <label for="inputCapital">Capital</label>
                 <input type="text" class="form-control" id="inputCapital" disabled />
             </div>
             <!-- Comentarios -->

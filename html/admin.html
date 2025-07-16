@@ -107,6 +107,7 @@
                 $('#edit-id').val(contacto.id);
                 $('#edit-nombre').val(contacto.nombre);
                 $('#edit-email').val(contacto.email);
+                $('#edit-telefono').val(contacto.telefono);
                 $('#edit-pais').val(contacto.pais);
                 $('#edit-comentarios').val(contacto.comentarios);
                 $('#form-editar').show();
@@ -115,40 +116,45 @@
         });
 
         // Guardar cambios al editar
-        $('#editarForm').on('submit', function (e) {
-            e.preventDefault();
+        $(document).ready(function () {
+            $('#editarForm').on('submit', function (e) {
+                e.preventDefault();
 
-            const id = parseInt($('#edit-id').val());
-            const nombre = $('#edit-nombre').val().trim();
-            const email = $('#edit-email').val().trim();
-            const pais = $('#edit-pais').val().trim();
-            const comentarios = $('#edit-comentarios').val().trim();
+                const id = parseInt($('#edit-id').val());
+                const nombre = $('#edit-nombre').val().trim();
+                const email = $('#edit-email').val().trim();
+                const telefono = $('#edit-telefono').val().trim();
+                const pais = $('#edit-pais').val().trim();
+                const comentarios = $('#edit-comentarios').val().trim();
 
-            let dataBase = JSON.parse(localStorage.getItem("contactos")) || [];
-            const index = dataBase.findIndex(c => c.id === id);
+                let dataBase = JSON.parse(localStorage.getItem("contactos")) || []; //Se cargan los datos de la local storage y se guardan en la variable dataBase como un array
+                const index = dataBase.findIndex(contacto => contacto.id === id); //Se recorre el array de dataBase y se guarda ese objeto del array en contacto
+                //Posteriormente se compara el id del "contacto" con el id del formulario recorrido.
 
-            if (index !== -1) {
-                dataBase[index] = { id, nombre, email, pais, comentarios };
-                localStorage.setItem("contactos", JSON.stringify(dataBase));
+                if (index !== -1) {
+                    dataBase[index] = { id, nombre, email, telefono, pais, comentarios };
+                    localStorage.setItem("contactos", JSON.stringify(dataBase));
 
-                const fila = $(`tr[data-id="${id}"]`);
-                fila.find('td:eq(0)').text(nombre);
-                fila.find('td:eq(1)').text(email);
-                fila.find('td:eq(2)').text(pais);
-                fila.find('td:eq(3)').text(comentarios);
+                    const fila = $(`tr[data-id="${id}"]`);
+                    fila.find('td:eq(0)').text(nombre);
+                    fila.find('td:eq(1)').text(email);
+                    fila.find('td:eq(2)').text(telefono);
+                    fila.find('td:eq(3)').text(pais);
+                    fila.find('td:eq(4)').text(comentarios);
 
-                // Mostrar notificación visual
-                $('#notificacionExito').fadeIn();
-                setTimeout(() => {
-                    $('#notificacionExito').fadeOut();
-                }, 4000);
+                    // Mostrar notificación visual
+                    $('#notificacionExito').fadeIn();
+                    setTimeout(() => {
+                        $('#notificacionExito').fadeOut();
+                    }, 5000);
 
-                $('#form-editar').hide(); // si no usas modal
+                    $('#form-editar').hide(); // si no usas modal
+                }
+            });
+            function cerrarNotificacion() {
+                $('#notificacionExito').fadeOut();
             }
         });
-        function cerrarNotificacion() {
-            $('#notificacionExito').fadeOut();
-        }
     </script>
 </head>
 
@@ -226,6 +232,11 @@
             <div class="form-group">
                 <label>Email</label>
                 <input type="email" id="edit-email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Telefono</label>
+                <input type="tel" pattern="[0-9]{9}" maxlength="9" class="form-control" id="edit-telefono"
+                    placeholder="912345678" required>
             </div>
             <div class="form-group">
                 <label>País</label>

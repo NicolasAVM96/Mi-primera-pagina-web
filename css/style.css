@@ -225,16 +225,28 @@ footer h5 {
 /* Estilos de la tabla de contactos */
 #tabla-contactos {
   max-width: 90%;
+<<<<<<< HEAD
   margin: 40px auto; /* centrado horizontal y espacio arriba/abajo */
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+=======
+  margin: 40px auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+/* Tamaño del contenedor  */
+>>>>>>> 5cdec64a88e0f5a691bd2e32cdfa9c848707e191
 .contenedor-tabla {
   max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
 }
 
+<<<<<<< HEAD
+=======
+/* Tamaño estilo del formulario de edicion */
+>>>>>>> 5cdec64a88e0f5a691bd2e32cdfa9c848707e191
 #form-editar {
   max-width: 600px;
   margin: 20px auto;
